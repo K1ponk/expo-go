@@ -1,15 +1,18 @@
 {
 	"token": [
 		{
-			"path": "./token.sol",
+			"path": "./",
+			"name": "token.sol",
 			"raw": "https://raw.githubusercontent.com/penta-expo/expo-go/master/templates/contracts/token.sol"
 		},
 		{
-			"path": "./eip20/ieip.sol",
+			"path": "./eip20/",
+			"name": "ieip20.sol",
 			"raw": "https://raw.githubusercontent.com/penta-expo/expo-go/master/templates/contracts/eip20/ieip20.sol"
 		},
 		{
-			"path": "./eip20/eip.sol",
+			"path": "./eip20/",
+			"name": "eip20.sol",
 			"raw": "https://raw.githubusercontent.com/penta-expo/expo-go/master/templates/contracts/eip20/eip20.sol"
 		}
 	]
