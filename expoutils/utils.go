@@ -21,10 +21,17 @@ import (
 	"fmt"
 	"io"
 	"io/ioutil"
+	"net/http"
 	"os"
 	"os/exec"
 	"runtime"
 )
+
+// WriteFile is a function for writing custom file
+func WriteFile(target string, data []byte) error {
+	// write file and return error
+	return ioutil.WriteFile(target, data, 0666)
+}
 
 // WriteJson is a function for writing json file
 func WriteJson(target string, data interface{}) error {
@@ -114,4 +121,32 @@ func Fatalf(format string, args ...interface{}) {
 
 	fmt.Fprintf(w, "Fatal: "+format+"\n", args...)
 	os.Exit(1)
+}
+
+// HttpGetJson will do http request `get` with json result
+func HttpGetJson(url string, result interface{}) error {
+	// call http request
+	res, err := http.Get(url)
+	if err != nil {
+		return err
+	}
+
+	defer res.Body.Close()
+
+	// decode result
+	return json.NewDecoder(res.Body).Decode(&result)
+}
+
+// HttpGetRaw will do http request `get` with raw result
+func HttpGetRaw(url string) ([]byte, error) {
+	// call http request
+	res, err := http.Get(url)
+	if err != nil {
+		return nil, err
+	}
+
+	defer res.Body.Close()
+
+	// return the result
+	return ioutil.ReadAll(res.Body)
 }

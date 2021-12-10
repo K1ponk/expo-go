@@ -17,6 +17,8 @@
 package main
 
 import (
+	"os"
+
 	"github.com/fatih/color"
 	"github.com/penta-expo/expobar/expocli"
 	"github.com/penta-expo/expobar/expoutils"
@@ -65,7 +67,7 @@ func initAction(ctx *cli.Context) error {
 
 	// check for name flag
 	if ctx.String("name") == "" {
-		config.Name = expocli.Prompt("Project name: ")
+		config.Name = expocli.Prompt("Project name")
 	} else {
 		config.Name = ctx.String("name")
 	}
@@ -92,9 +94,60 @@ func initAction(ctx *cli.Context) error {
 
 		expoutils.Fatalf("failed writing config file > %v", err)
 	}
+	s.StopMessage(green(" configured."))
+	s.Stop()
+
+	// write simple template
+	s.Message(yellow("writing template"))
+	s.Start()
+
+	var templ ContractsTokenTemplate
+	err = expoutils.HttpGetJson(TokenTemplateUrl, &templ)
+	if err != nil {
+		s.StopFailMessage(red(" cannot get template"))
+		s.StopFail()
+
+		expoutils.Fatalf("failed fetch template > %v", err)
+	}
+
+	// begin writing the template
+	for i := range templ["token"] {
+		s.StopFailMessage(red(" failed creating template."))
+		currentTemplate := templ["token"][i]
+		templName := currentTemplate.Name
+		templPath := "./contracts/" + currentTemplate.Path
+		templRaw := currentTemplate.Raw
+		if err = expoutils.CheckPath(templPath); os.IsNotExist(err) {
+			err = os.MkdirAll(templPath, 0777)
+
+			if err != nil {
+				s.StopFail()
+
+				expoutils.Fatalf(" error creating folder > %v", err)
+			}
+		}
+
+		if err = expoutils.CheckPath(templPath + templName); os.IsNotExist(err) {
+			// get template and write into file
+			sol, err := expoutils.HttpGetRaw(templRaw)
+			if err != nil {
+				s.StopFail()
+
+				expoutils.Fatalf(" error writing template > %v", err)
+			}
+
+			if err = expoutils.WriteFile(templPath + templName, sol); err != nil {
+				s.StopFail()
+
+				expoutils.Fatalf(" error writing template > %v", err)
+			}
+		}
+	}
 
 	s.StopMessage(green(" Happy hacking!!"))
 	s.Stop()
+
+	expoutils.Fatalf("> %v", templ)
 
 	return nil
 }
