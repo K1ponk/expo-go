@@ -1,0 +1,16 @@
+{
+	"token": [
+		{
+			"path": "./token.sol",
+			"raw": "https://raw.githubusercontent.com/penta-expo/expo-go/master/templates/contracts/token.sol"
+		},
+		{
+			"path": "./eip20/ieip.sol",
+			"raw": "https://raw.githubusercontent.com/penta-expo/expo-go/master/templates/contracts/eip20/ieip20.sol"
+		},
+		{
+			"path": "./eip20/eip.sol",
+			"raw": "https://raw.githubusercontent.com/penta-expo/expo-go/master/templates/contracts/eip20/eip20.sol"
+		}
+	]
+}
