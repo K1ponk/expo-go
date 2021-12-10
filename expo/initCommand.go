@@ -53,6 +53,45 @@ func initAction(ctx *cli.Context) error {
 	}
 
 	// generate and write config file
+	var config expocli.Config
+	config = expocli.Config{
+		Networks: map[string]interface{}{
+			"dev": expocli.Network{
+				Rpc: "http://127.0.0.1:8545",
+				Secret: ".secret",
+			},
+		},
+	}
+
+	// check for name flag
+	if ctx.String("name") == "" {
+		config.Name = expocli.Prompt("Project name: ")
+	} else {
+		config.Name = ctx.String("name")
+	}
+
+	// get list of available solc-js version
+	solcList := expoutils.GetSolcjsList()
+	// if flags for compiler version is set, compare with available list
+	// and if not ask user to choose one of available version from list
+	if ctx.String("compiler.version") == "" || !expoutils.Contains(ctx.String("compiler.version"), solcList) {
+		config.Compiler.Version = expocli.PromptSelect("Select solidity version", solcList)
+	} else {
+		config.Compiler.Version = ctx.String("compiler.version")
+	}
+
+	// set other extra option for the compiler
+	config.Compiler.Optimize = ctx.Bool("compiler.optimize")
+	config.Compiler.Runs = ctx.Uint("compiler.optimize-runs")
+
+	// begin write the config
+	err = expoutils.WriteJson("./expo.json", config)
+	if err != nil {
+		s.StopFailMessage(red(" cannot write configuration file"))
+		s.StopFail()
+
+		expoutils.Fatalf("failed writing config file > %v", err)
+	}
 
 	s.StopMessage(green(" Happy hacking!!"))
 	s.Stop()

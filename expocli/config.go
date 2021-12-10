@@ -16,32 +16,22 @@
 
 package expocli
 
-import (
-	"time"
+// Config struct for configuration
+type Config struct{
+	Name string `json:"name"`
+	Networks interface{} `json:"networks"`
+	Compiler Compiler `json:"compiler"`
+}
 
-	"github.com/penta-expo/expobar/expoutils"
-	"github.com/theckman/yacspin"
-)
+// Networks struct for configuration
+type Network struct{
+	Rpc string `json:"rpc"`
+	Secret string `json:"secret"`
+}
 
-// Spinners will create new spinner
-func Spinners() *yacspin.Spinner {
-	// config for spinner
-	cfg := yacspin.Config{
-		Frequency: 100 * time.Millisecond,
-		CharSet: yacspin.CharSets[41],
-		SuffixAutoColon: true,
-		Colors: []string{"fgYellow"},
-		StopColors: []string{"fgGreen"},
-		StopCharacter: "√",
-		StopFailColors: []string{"fgRed"},
-		StopFailCharacter: "✗",
-	}
-
-	// create the app
-	spinner, err := yacspin.New(cfg)
-	if err != nil {
-		expoutils.Fatalf("failed initiating spinner %v", err)
-	}
-
-	return spinner
+// Compiler struct for configuration
+type Compiler struct{
+	Version string `json:"version"`
+	Optimize bool `json:"optimize"`
+	Runs uint `json:"runs"`
 }

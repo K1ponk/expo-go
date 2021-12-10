@@ -28,7 +28,16 @@ var (
 	CompilerVersionFlag = cli.StringFlag{
 		Name: "compiler.version",
 		Usage: "Specify the version of solidity",
-		Value: "0.8.10",
+	}
+	// CompilerOptimizeFlag for set optimization
+	CompilerOptimizeFlag = cli.BoolFlag{
+		Name: "compiler.optimize",
+		Usage: "Setting compiler optimozation",
+	}
+	// CompilerOptimizeRunsFlag for set runs of optimozation
+	CompilerOptimizeRunsFlag = cli.UintFlag{
+		Name: "compiler.optimize-runs",
+		Usage: "Set optimization runs",
 	}
 )
 

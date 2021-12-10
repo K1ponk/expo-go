@@ -27,6 +27,8 @@ var (
 		Flags: []cli.Flag{
 			&NameFlag,
 			&CompilerVersionFlag,
+			&CompilerOptimizeFlag,
+			&CompilerOptimizeRunsFlag,
 		},
 	}
 )

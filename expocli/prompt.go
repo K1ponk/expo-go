@@ -17,31 +17,48 @@
 package expocli
 
 import (
-	"time"
-
+	"github.com/manifoldco/promptui"
 	"github.com/penta-expo/expobar/expoutils"
-	"github.com/theckman/yacspin"
 )
 
-// Spinners will create new spinner
-func Spinners() *yacspin.Spinner {
-	// config for spinner
-	cfg := yacspin.Config{
-		Frequency: 100 * time.Millisecond,
-		CharSet: yacspin.CharSets[41],
-		SuffixAutoColon: true,
-		Colors: []string{"fgYellow"},
-		StopColors: []string{"fgGreen"},
-		StopCharacter: "√",
-		StopFailColors: []string{"fgRed"},
-		StopFailCharacter: "✗",
+// Prompt will send user a prompt
+func Prompt(q string) string {
+	// initiate promptui
+	templ := promptui.PromptTemplates{
+		Prompt: "{{. | yellow}}",
+	}
+	prompt := promptui.Prompt{
+		Label: q,
+		Templates: &templ,
 	}
 
-	// create the app
-	spinner, err := yacspin.New(cfg)
+	res, err := prompt.Run()
 	if err != nil {
-		expoutils.Fatalf("failed initiating spinner %v", err)
+		expoutils.Fatalf("failed run prompt > %v", err)
 	}
 
-	return spinner
+	return res
+}
+
+// PromptSelect will send user select option
+func PromptSelect(q string, data []string) string {
+	// send user selection input
+	templ := promptui.SelectTemplates{
+		Label: "{{.}}",
+		Inactive: "  {{. | yellow}}",
+		Active: "> {{. | green}}",
+	}
+	prompt := promptui.Select{
+		Label: q,
+		Items: data,
+		Templates: &templ,
+		HideSelected: true,
+	}
+
+	_, res, err := prompt.Run()
+	if err != nil {
+		expoutils.Fatalf("error sending input > %v", err)
+	}
+
+	return res
 }
