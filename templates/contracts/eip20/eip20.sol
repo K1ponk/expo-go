@@ -18,7 +18,7 @@
 pragma solidity 0.8.10;
 
 // import and use the eip20 interface
-import "./ieip20.sol"
+import "./ieip20.sol";
 
 // implementation of eip20 ./interface.sol
 contract EIP20 is IEIP20 {
