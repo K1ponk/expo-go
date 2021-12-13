@@ -148,8 +148,7 @@ func compileAction(ctx *cli.Context) error {
 	args := []string{"--bin", "--abi", "--base-path", "contracts/", "--output-dir", "build/"}
 
 	if cfg.Compiler.Optimize {
-		opt := []string{"--optimize", "--optimize-runs"}
-		opt = append(opt, string(cfg.Compiler.Runs))
+		opt := []string{"--optimize", "--optimize-runs", string(cfg.Compiler.Runs)}
 
 		args = append(args, opt...)
 	}
