@@ -45,6 +45,26 @@ func WriteJson(target string, data interface{}) error {
 	return ioutil.WriteFile(target, jsonData, 0666)
 }
 
+// ReadJson is a function for read a json file
+func ReadJson(target string, result interface{}) error {
+	// open file for read
+	f, err := os.Open(target)
+	if err != nil {
+		return err
+	}
+
+	defer f.Close()
+
+	// read the file
+	content, err := ioutil.ReadAll(f)
+	if err != nil {
+		return err
+	}
+
+	// return err, and decode json into result
+	return json.Unmarshal(content, &result)
+}
+
 // ReadFile is a function for read a file
 func ReadFile(target string) ([]byte, error) {
 	// open the file for read

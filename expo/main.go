@@ -19,8 +19,8 @@ package main
 import (
 	"os"
 
-	"github.com/penta-expo/expobar/expocli"
-	"github.com/penta-expo/expobar/expoutils"
+	"github.com/penta-expo/expo-go/expocli"
+	"github.com/penta-expo/expo-go/expoutils"
 	"github.com/urfave/cli/v2"
 )
 
@@ -34,6 +34,7 @@ func init() {
 	app.CustomAppHelpTemplate = expocli.AppHelpTemplate
 	app.Commands = []*cli.Command{
 		&InitCommand,
+		&CompileCommand,
 	}
 }
 

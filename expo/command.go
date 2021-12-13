@@ -31,6 +31,12 @@ var (
 			&CompilerOptimizeRunsFlag,
 		},
 	}
+	// CompileCommand for compiling a project
+	CompileCommand = cli.Command{
+		Name: "compile",
+		Usage: "Compile the project.",
+		Action: compileAction,
+	}
 )
 
 

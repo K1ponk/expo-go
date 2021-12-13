@@ -19,7 +19,7 @@ package expocli
 import (
 	"time"
 
-	"github.com/penta-expo/expobar/expoutils"
+	"github.com/penta-expo/expo-go/expoutils"
 	"github.com/theckman/yacspin"
 )
 

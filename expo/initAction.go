@@ -20,8 +20,8 @@ import (
 	"os"
 
 	"github.com/fatih/color"
-	"github.com/penta-expo/expobar/expocli"
-	"github.com/penta-expo/expobar/expoutils"
+	"github.com/penta-expo/expo-go/expocli"
+	"github.com/penta-expo/expo-go/expoutils"
 	"github.com/urfave/cli/v2"
 )
 
@@ -146,8 +146,6 @@ func initAction(ctx *cli.Context) error {
 
 	s.StopMessage(green(" Happy hacking!!"))
 	s.Stop()
-
-	expoutils.Fatalf("> %v", templ)
 
 	return nil
 }

@@ -18,7 +18,7 @@ package expocli
 
 import (
 	"github.com/manifoldco/promptui"
-	"github.com/penta-expo/expobar/expoutils"
+	"github.com/penta-expo/expo-go/expoutils"
 )
 
 // Prompt will send user a prompt
